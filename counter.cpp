@@ -2,39 +2,54 @@
 #include <string>
 using namespace std;
 
-const int MAX_PARKING_LOTS = 500;
+const int DEFAULT_MAX_PARKING_LOTS = 500;
 
 class Counter {
   int availableLots;
+  int maxParkingLots;
   public:
-    Counter();
-    void increase ();
-    void decrease ();
-    string getAvailableLots ();
+    Counter (int configMaxLots) {
+      if(configMaxLots > 0) {
+        maxParkingLots = configMaxLots;
+        availableLots = maxParkingLots;
+      }
+      maxParkingLots = DEFAULT_MAX_PARKING_LOTS;
+    }
+
+    Counter () {
+        maxParkingLots = DEFAULT_MAX_PARKING_LOTS;
+        availableLots = DEFAULT_MAX_PARKING_LOTS;
+    }
+
+    void park () {
+      if(availableLots == 0)
+        return ;
+      availableLots--;
+    }
+
+    void unpark () {
+      if(availableLots >= maxParkingLots)
+        return ;
+      availableLots++;
+    }
+
+    void resetAvailableLots () {
+      availableLots = maxParkingLots;
+    }
+
+    void setAvailableLots (int currentLots) {
+      if(currentLots > 0) {
+        availableLots = currentLots;
+      }
+    }
+
+    string getAvailableLots () {
+      string result = "";
+      if (availableLots == 0)
+        result = "FULL";
+      else 
+        result = to_string(availableLots);
+      
+      return result;
+    }
 };
-
-Counter::Counter (void) {
-  availableLots = MAX_PARKING_LOTS;
-}
-
-void Counter::increase () {
-  if(availableLots >= MAX_PARKING_LOTS)
-    return ;
-  availableLots++;
-}
-
-void Counter::decrease () {
-  if(availableLots == 0)
-    return ;
-  availableLots--;
-}
-
-string Counter::getAvailableLots () {
-  string result = "";
-  if (availableLots == MAX_PARKING_LOTS)
-    result = "FULL";
-  else 
-    result = to_string(availableLots);
-  
-  return result;
-}
