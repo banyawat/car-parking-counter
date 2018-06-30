@@ -38,7 +38,7 @@ class Counter {
     }
 
     void setAvailableLots (int currentLots) {
-      if(currentLots > 0) {
+      if(currentLots >= 0 && currentLots <= maxParkingLots) {
         availableLots = currentLots;
       }
     }
